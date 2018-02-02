@@ -1,0 +1,6 @@
+framework module Pods_AISphereView_Tests {
+  umbrella header "Pods-AISphereView_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module AISphereView {
+  umbrella header "AISphereView-umbrella.h"
+
+  export *
+  module * { export * }
+}

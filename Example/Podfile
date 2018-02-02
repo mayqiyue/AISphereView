@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'AISphereView_Example' do
+  pod 'AISphereView', :path => '../'
+
+  target 'AISphereView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

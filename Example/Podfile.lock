@@ -1,0 +1,16 @@
+PODS:
+  - AISphereView (0.1.0)
+
+DEPENDENCIES:
+  - AISphereView (from `../`)
+
+EXTERNAL SOURCES:
+  AISphereView:
+    :path: ../
+
+SPEC CHECKSUMS:
+  AISphereView: 037cb59f53e43ffbee724c60aa3a11bbf7c5c42b
+
+PODFILE CHECKSUM: b2a1736be4448b89b41396e0f84f6741598278d7
+
+COCOAPODS: 1.4.0
