@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		011A17AB42D8468E1CB82295A6879214 /* ReplaceMe.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CDA1C3055F1E55DEA2BAAC252AE98E7 /* ReplaceMe.m */; };
-		1062B318290F6E9EC61B9F5BF021825A /* AISphereView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D1FDB5FB9AAC7C839B85ADDF761A1B /* AISphereView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		027DA956EE39452D9C413E67570F7C3D /* AISphereView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E9A4BEFFD7005E82F45E8E2F91EAA4F /* AISphereView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4B854774AFDF78B19C588C7C673B3FBA /* AIMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8D46E7C703494814C81C4577474684 /* AIMatrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8D21EFD55B2AF11EE84D6409FB76F912 /* Pods-AISphereView_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA2CB53CCC6A72F3599276044BC56D1 /* Pods-AISphereView_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FB4360478C1A54C452F55F6928F6BB3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		BA1863DF0C1422DFEDAF5A2FCAE2F1E8 /* AISphereView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C1B69F79D69AA7EC27F845A448E593 /* AISphereView-dummy.m */; };
 		BD038F07251D538354361F32108FE8DD /* Pods-AISphereView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA343A57372492E9E07D24F6E94A566 /* Pods-AISphereView_Example-dummy.m */; };
+		C94ABEF5BFF29CC60AB27335FF8780C6 /* AIPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 7470F2E78BE39FCC7D9011DC7CE13BD4 /* AIPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C982053DE445C71E7D9732F6DDB8660B /* AISphereView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA50CABB18ECD1FAFD2976DEAC0F037C /* AISphereView.m */; };
 		CD55C4C08EBC03F7DEEDB6171F0A4E77 /* Pods-AISphereView_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BC4EBE0C401F83195FDFA17E8A4A9EC2 /* Pods-AISphereView_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D122F29E4CB4508B53EB08656F3E2C5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		EA72C6D906F1DFC0751D0F2CFE8E2570 /* AISphereView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A2E635376674F2C7FC6C40481E4538 /* AISphereView-dummy.m */; };
+		ECF45786E0B8E4284D5206DABCB395C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		F51EE811E84156EAC7D455AFC4BEA14B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		FE3EBEC797BF238E5CD680B1E9BD1484 /* Pods-AISphereView_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC8C6233BB03E1844582FE2B53891BC /* Pods-AISphereView_Tests-dummy.m */; };
+		FF43B2E38F1F9A4495134A2810051B3D /* AISphereView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB487E97429B0DFE3D2E9435B1458546 /* AISphereView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,63 +27,67 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 393AED2D90F2047D887BB0D96B0F0DE7;
+			remoteGlobalIDString = DD654FDC62AAFC4A1A79536E945B49D4;
 			remoteInfo = AISphereView;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09A2E635376674F2C7FC6C40481E4538 /* AISphereView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AISphereView-dummy.m"; sourceTree = "<group>"; };
-		0A110C510CFA7ED52224D9E550CA1437 /* AISphereView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AISphereView-prefix.pch"; sourceTree = "<group>"; };
+		0387D9EACB6B8753C9678FDB4AEEEA73 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		0E22D45FE9B33262909B8B2BCF681921 /* AISphereView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AISphereView-prefix.pch"; sourceTree = "<group>"; };
 		134283789F4E8BB846363BAF1CE41B64 /* Pods-AISphereView_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AISphereView_Example-frameworks.sh"; sourceTree = "<group>"; };
 		249F5ECEEC6C13AA9896D03E5C02D62A /* Pods-AISphereView_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AISphereView_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		2A05FFC78C6C83C9E5D850908A5673C5 /* Pods-AISphereView_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AISphereView_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3DC8C6233BB03E1844582FE2B53891BC /* Pods-AISphereView_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AISphereView_Tests-dummy.m"; sourceTree = "<group>"; };
 		3EE6D0E0759C4F3F9C190A1FE2D4F14C /* Pods-AISphereView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AISphereView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		464D1B8F46A7684C7B79F4CB2797AEBF /* Pods-AISphereView_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AISphereView_Example-resources.sh"; sourceTree = "<group>"; };
-		495D190F4CB01F19F531C42F370AB96C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C8D46E7C703494814C81C4577474684 /* AIMatrix.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIMatrix.h; path = AISphereView/Classes/AIMatrix.h; sourceTree = "<group>"; };
 		4FA2CB53CCC6A72F3599276044BC56D1 /* Pods-AISphereView_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AISphereView_Tests-umbrella.h"; sourceTree = "<group>"; };
 		52B574143D67D93940BC5AED4007ECE6 /* Pods-AISphereView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AISphereView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5E527C84B6097761E20DF516955B6283 /* Pods_AISphereView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AISphereView_Tests.framework; path = "Pods-AISphereView_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E273A4CCA96A5CBFB194155F639013 /* Pods_AISphereView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_AISphereView_Example.framework; path = "Pods-AISphereView_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		66DE02F670BF1F40C8FFE0286919E690 /* AISphereView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = AISphereView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		674C51ED333D6BCBEA520F8A09C38DA1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67C1B69F79D69AA7EC27F845A448E593 /* AISphereView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AISphereView-dummy.m"; sourceTree = "<group>"; };
+		6ED93C1F8D32ADBC4D0338185B46EB6B /* AISphereView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = AISphereView.modulemap; sourceTree = "<group>"; };
+		7470F2E78BE39FCC7D9011DC7CE13BD4 /* AIPoint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AIPoint.h; path = AISphereView/Classes/AIPoint.h; sourceTree = "<group>"; };
 		747F2C21DEF05753743A8A955A52862C /* Pods-AISphereView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-AISphereView_Example.modulemap"; sourceTree = "<group>"; };
 		7BD1F2135969A67D8D70A77535702732 /* Pods-AISphereView_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-AISphereView_Tests.modulemap"; sourceTree = "<group>"; };
-		7CDA1C3055F1E55DEA2BAAC252AE98E7 /* ReplaceMe.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ReplaceMe.m; path = AISphereView/Classes/ReplaceMe.m; sourceTree = "<group>"; };
+		7E9A4BEFFD7005E82F45E8E2F91EAA4F /* AISphereView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AISphereView-umbrella.h"; sourceTree = "<group>"; };
+		81012BEED9A9CDA9445BE0FC9E4EA66B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C698BAF46FD51CA32F86D2E6D814FB /* Pods-AISphereView_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AISphereView_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		8E9A311B227CE642C88ACA8DADE67FC2 /* AISphereView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AISphereView.xcconfig; sourceTree = "<group>"; };
 		8FA343A57372492E9E07D24F6E94A566 /* Pods-AISphereView_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AISphereView_Example-dummy.m"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A3DE693FA129CA5C298BBC8233E5D160 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B3D1FDB5FB9AAC7C839B85ADDF761A1B /* AISphereView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AISphereView-umbrella.h"; sourceTree = "<group>"; };
-		B527EAF52B4EDA9B1834459A8F9B97CF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		AB487E97429B0DFE3D2E9435B1458546 /* AISphereView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AISphereView.h; path = AISphereView/Classes/AISphereView.h; sourceTree = "<group>"; };
 		B54FE90B0D791EC8D3C641D0280B4510 /* AISphereView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AISphereView.framework; path = AISphereView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4EBE0C401F83195FDFA17E8A4A9EC2 /* Pods-AISphereView_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AISphereView_Example-umbrella.h"; sourceTree = "<group>"; };
-		C92182D6DE1B574D9461481148FE4897 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		CA50CABB18ECD1FAFD2976DEAC0F037C /* AISphereView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AISphereView.m; path = AISphereView/Classes/AISphereView.m; sourceTree = "<group>"; };
+		D7341487CA5F94EA1023743295D35657 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevealServer.framework; path = "RevealServer-11/iOS/RevealServer.framework"; sourceTree = "<group>"; };
 		DD4F3A0778EE2A7121462D5D5FB148D2 /* Pods-AISphereView_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AISphereView_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		E5AF11084A4C808A20170440A6E656FC /* Pods-AISphereView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AISphereView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E5B3BB4EE61E2273A9EFBAE5F4613BAF /* Pods-AISphereView_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AISphereView_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		EE1359E8C187585F3F8E6BEB7ED2E012 /* AISphereView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = AISphereView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		EE13B1C4E2369692D8F242B473AA1D7B /* Pods-AISphereView_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AISphereView_Tests-resources.sh"; sourceTree = "<group>"; };
 		EF1D1A0F095C3DAB4B39BE9D6ADF6F2A /* Pods-AISphereView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AISphereView_Example.release.xcconfig"; sourceTree = "<group>"; };
-		F407179196BBEA006C36169989B97147 /* AISphereView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = AISphereView.modulemap; sourceTree = "<group>"; };
+		F9DE114DE69260812AD85C2BC3527AE5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		FA19B7C55D4EF290043B8FC194F2B410 /* AISphereView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AISphereView.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		18BB5929C8DD49E3A694BBB04086A8D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECF45786E0B8E4284D5206DABCB395C2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1908F5CBCAB4277CB3F862E58A43D6D8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F51EE811E84156EAC7D455AFC4BEA14B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2C4BCFE3AE0E7BD77D1634B9B4DB81CF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D122F29E4CB4508B53EB08656F3E2C5E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +102,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10C5A85D80B5CFDD410C3F5ACA286113 /* AISphereView */ = {
+			isa = PBXGroup;
+			children = (
+				4C8D46E7C703494814C81C4577474684 /* AIMatrix.h */,
+				7470F2E78BE39FCC7D9011DC7CE13BD4 /* AIPoint.h */,
+				AB487E97429B0DFE3D2E9435B1458546 /* AISphereView.h */,
+				CA50CABB18ECD1FAFD2976DEAC0F037C /* AISphereView.m */,
+				81486B6AA099FD698ABB1800FF814DE0 /* Pod */,
+				3ED4350CD2BF7D4D669EF14BF91095E1 /* Support Files */,
+			);
+			name = AISphereView;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		2F48FAD7D8598E35B6A34F4476D9F00B /* Pods-AISphereView_Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,15 +134,15 @@
 			path = "Target Support Files/Pods-AISphereView_Example";
 			sourceTree = "<group>";
 		};
-		3B09974E1AA9546293471C8B92320E94 /* Support Files */ = {
+		3ED4350CD2BF7D4D669EF14BF91095E1 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				F407179196BBEA006C36169989B97147 /* AISphereView.modulemap */,
-				8E9A311B227CE642C88ACA8DADE67FC2 /* AISphereView.xcconfig */,
-				09A2E635376674F2C7FC6C40481E4538 /* AISphereView-dummy.m */,
-				0A110C510CFA7ED52224D9E550CA1437 /* AISphereView-prefix.pch */,
-				B3D1FDB5FB9AAC7C839B85ADDF761A1B /* AISphereView-umbrella.h */,
-				495D190F4CB01F19F531C42F370AB96C /* Info.plist */,
+				6ED93C1F8D32ADBC4D0338185B46EB6B /* AISphereView.modulemap */,
+				FA19B7C55D4EF290043B8FC194F2B410 /* AISphereView.xcconfig */,
+				67C1B69F79D69AA7EC27F845A448E593 /* AISphereView-dummy.m */,
+				0E22D45FE9B33262909B8B2BCF681921 /* AISphereView-prefix.pch */,
+				7E9A4BEFFD7005E82F45E8E2F91EAA4F /* AISphereView-umbrella.h */,
+				81012BEED9A9CDA9445BE0FC9E4EA66B /* Info.plist */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/AISphereView";
@@ -137,25 +158,42 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5A98F0B94F55C3DC711E026A69ADD135 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				66DE02F670BF1F40C8FFE0286919E690 /* AISphereView.podspec */,
-				C92182D6DE1B574D9461481148FE4897 /* LICENSE */,
-				B527EAF52B4EDA9B1834459A8F9B97CF /* README.md */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				DD274680C76497F8B15195930BB966C0 /* Development Pods */,
+				FEAEFEC32713104882014F69AD11507D /* Development Pods */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				9B6766349D399265AA26ED6C7E8D5333 /* Pods */,
 				42DD3F7840201945D7E51F426F4B4198 /* Products */,
 				FB6C2BF923B33A7BA7275DA1F4329FE8 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		81486B6AA099FD698ABB1800FF814DE0 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				EE1359E8C187585F3F8E6BEB7ED2E012 /* AISphereView.podspec */,
+				0387D9EACB6B8753C9678FDB4AEEEA73 /* LICENSE */,
+				F9DE114DE69260812AD85C2BC3527AE5 /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		8A41102086806AD024D447E412C9A91B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7341487CA5F94EA1023743295D35657 /* RevealServer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B6766349D399265AA26ED6C7E8D5333 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E853FEE7349B6E1788A524CC074AEEB0 /* Reveal-SDK */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		A7C8D0198670C9FC8453C9427DA86CFC /* Pods-AISphereView_Tests */ = {
@@ -184,17 +222,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C5280F9DA24CA1F3F2BC8BA369CF03C6 /* AISphereView */ = {
-			isa = PBXGroup;
-			children = (
-				7CDA1C3055F1E55DEA2BAAC252AE98E7 /* ReplaceMe.m */,
-				5A98F0B94F55C3DC711E026A69ADD135 /* Pod */,
-				3B09974E1AA9546293471C8B92320E94 /* Support Files */,
-			);
-			name = AISphereView;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,12 +230,13 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		DD274680C76497F8B15195930BB966C0 /* Development Pods */ = {
+		E853FEE7349B6E1788A524CC074AEEB0 /* Reveal-SDK */ = {
 			isa = PBXGroup;
 			children = (
-				C5280F9DA24CA1F3F2BC8BA369CF03C6 /* AISphereView */,
+				8A41102086806AD024D447E412C9A91B /* Frameworks */,
 			);
-			name = "Development Pods";
+			name = "Reveal-SDK";
+			path = "Reveal-SDK";
 			sourceTree = "<group>";
 		};
 		FB6C2BF923B33A7BA7275DA1F4329FE8 /* Targets Support Files */ = {
@@ -218,6 +246,14 @@
 				A7C8D0198670C9FC8453C9427DA86CFC /* Pods-AISphereView_Tests */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		FEAEFEC32713104882014F69AD11507D /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				10C5A85D80B5CFDD410C3F5ACA286113 /* AISphereView */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,34 +275,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7395F3BEFCADE22E9BA7ACB1A9CFE250 /* Headers */ = {
+		DD370FD8DE14C08762D34A39B28EFE61 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1062B318290F6E9EC61B9F5BF021825A /* AISphereView-umbrella.h in Headers */,
+				4B854774AFDF78B19C588C7C673B3FBA /* AIMatrix.h in Headers */,
+				C94ABEF5BFF29CC60AB27335FF8780C6 /* AIPoint.h in Headers */,
+				027DA956EE39452D9C413E67570F7C3D /* AISphereView-umbrella.h in Headers */,
+				FF43B2E38F1F9A4495134A2810051B3D /* AISphereView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		393AED2D90F2047D887BB0D96B0F0DE7 /* AISphereView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7CCE1433DAE31DE29C4989FD9CB4E7CD /* Build configuration list for PBXNativeTarget "AISphereView" */;
-			buildPhases = (
-				966B7B323AE93A3BA952D7778EAFCA61 /* Sources */,
-				2C4BCFE3AE0E7BD77D1634B9B4DB81CF /* Frameworks */,
-				7395F3BEFCADE22E9BA7ACB1A9CFE250 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = AISphereView;
-			productName = AISphereView;
-			productReference = B54FE90B0D791EC8D3C641D0280B4510 /* AISphereView.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		82100D18117E8FFE67FEC30A2CEB5991 /* Pods-AISphereView_Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8973660C3100311C1663009D69D3CAD1 /* Build configuration list for PBXNativeTarget "Pods-AISphereView_Tests" */;
@@ -302,6 +324,23 @@
 			productReference = 61E273A4CCA96A5CBFB194155F639013 /* Pods_AISphereView_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		DD654FDC62AAFC4A1A79536E945B49D4 /* AISphereView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DBA32521618BA9C99C8DB8B5E2A6F1CB /* Build configuration list for PBXNativeTarget "AISphereView" */;
+			buildPhases = (
+				D283C295EE07ABA835CF68EC3FA52A1F /* Sources */,
+				18BB5929C8DD49E3A694BBB04086A8D2 /* Frameworks */,
+				DD370FD8DE14C08762D34A39B28EFE61 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AISphereView;
+			productName = AISphereView;
+			productReference = B54FE90B0D791EC8D3C641D0280B4510 /* AISphereView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -323,7 +362,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				393AED2D90F2047D887BB0D96B0F0DE7 /* AISphereView */,
+				DD654FDC62AAFC4A1A79536E945B49D4 /* AISphereView */,
 				B76073CE708D5BFA1F3B839712A5C20A /* Pods-AISphereView_Example */,
 				82100D18117E8FFE67FEC30A2CEB5991 /* Pods-AISphereView_Tests */,
 			);
@@ -339,12 +378,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		966B7B323AE93A3BA952D7778EAFCA61 /* Sources */ = {
+		D283C295EE07ABA835CF68EC3FA52A1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA72C6D906F1DFC0751D0F2CFE8E2570 /* AISphereView-dummy.m in Sources */,
-				011A17AB42D8468E1CB82295A6879214 /* ReplaceMe.m in Sources */,
+				BA1863DF0C1422DFEDAF5A2FCAE2F1E8 /* AISphereView-dummy.m in Sources */,
+				C982053DE445C71E7D9732F6DDB8660B /* AISphereView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +401,7 @@
 		3692C1859E724F03092029F834A55FC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AISphereView;
-			target = 393AED2D90F2047D887BB0D96B0F0DE7 /* AISphereView */;
+			target = DD654FDC62AAFC4A1A79536E945B49D4 /* AISphereView */;
 			targetProxy = 6AA7A18DBC98C02299C4FA0D65B008EE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -400,35 +439,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		1B337A0F60A4D6959171AB5E66E649E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E9A311B227CE642C88ACA8DADE67FC2 /* AISphereView.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/AISphereView/AISphereView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/AISphereView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/AISphereView/AISphereView.modulemap";
-				PRODUCT_NAME = AISphereView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		33DA7F43A1D2FA3C74A8C8FC246E1FA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -490,9 +500,9 @@
 			};
 			name = Debug;
 		};
-		61DB1021F33EEDB4499FC3203D6307DA /* Release */ = {
+		43AF38EECD673E9DD7807A06154238F2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E9A311B227CE642C88ACA8DADE67FC2 /* AISphereView.xcconfig */;
+			baseConfigurationReference = FA19B7C55D4EF290043B8FC194F2B410 /* AISphereView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -519,6 +529,35 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		623307E6B4893C00F5A1A889C15ACD36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA19B7C55D4EF290043B8FC194F2B410 /* AISphereView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/AISphereView/AISphereView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AISphereView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AISphereView/AISphereView.modulemap";
+				PRODUCT_NAME = AISphereView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		731DC216E1A58545B559F6E0A2418060 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -684,15 +723,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CCE1433DAE31DE29C4989FD9CB4E7CD /* Build configuration list for PBXNativeTarget "AISphereView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1B337A0F60A4D6959171AB5E66E649E8 /* Debug */,
-				61DB1021F33EEDB4499FC3203D6307DA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		8973660C3100311C1663009D69D3CAD1 /* Build configuration list for PBXNativeTarget "Pods-AISphereView_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -707,6 +737,15 @@
 			buildConfigurations = (
 				7CFA96BEF62AF1ABCBC6374B77907CA8 /* Debug */,
 				D58E91C0489194516E5CA9B98B19AAFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DBA32521618BA9C99C8DB8B5E2A6F1CB /* Build configuration list for PBXNativeTarget "AISphereView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				623307E6B4893C00F5A1A889C15ACD36 /* Debug */,
+				43AF38EECD673E9DD7807A06154238F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

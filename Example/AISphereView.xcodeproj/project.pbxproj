@@ -57,14 +57,14 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		6702650CCDA86124DE1E572B /* AISphereView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = AISphereView.podspec; path = ../AISphereView.podspec; sourceTree = "<group>"; };
+		6702650CCDA86124DE1E572B /* AISphereView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AISphereView.podspec; path = ../AISphereView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6B37DE71FFCB572B03B9B8D3 /* Pods_AISphereView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AISphereView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BD2C6C36FE6C313E8C8BC2B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		6BD2C6C36FE6C313E8C8BC2B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B46E7DC7DF19F55AB545A6E /* Pods_AISphereView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AISphereView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E85B0B2EAB2328DD9A5D6B3 /* Pods-AISphereView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AISphereView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AISphereView_Example/Pods-AISphereView_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		CA5994968FD5843822B70641 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		CA5994968FD5843822B70641 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D6083D07B54BBB990224CC80 /* Pods-AISphereView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AISphereView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AISphereView_Tests/Pods-AISphereView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DAA7FCCA35477834129B3115 /* Pods-AISphereView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AISphereView_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AISphereView_Tests/Pods-AISphereView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -335,10 +335,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-AISphereView_Example/Pods-AISphereView_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AISphereView/AISphereView.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AISphereView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

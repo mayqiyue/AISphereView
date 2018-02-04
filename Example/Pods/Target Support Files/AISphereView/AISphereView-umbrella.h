@@ -10,6 +10,9 @@
 #endif
 #endif
 
+#import "AIMatrix.h"
+#import "AIPoint.h"
+#import "AISphereView.h"
 
 FOUNDATION_EXPORT double AISphereViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char AISphereViewVersionString[];

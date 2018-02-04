@@ -7,8 +7,11 @@
 //
 
 #import "AIViewController.h"
+#import <AISphereView/AISphereView.h>
 
-@interface AIViewController ()
+@interface AIViewController () <AISphereViewDataSource, AISphereViewDelegate>
+
+@property (nonatomic, strong) AISphereView *sphereView;
 
 @end
 
@@ -17,13 +20,59 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    [self.view addSubview:self.sphereView];
+    [self.sphereView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+
+- (AISphereView *)sphereView {
+    if (!_sphereView) {
+        _sphereView = [[AISphereView alloc] initWithFrame:CGRectMake(0, 100, 375, 375)];
+        _sphereView.dataSource = self;
+        _sphereView.delegate = self;
+    }
+    return _sphereView;
+}
+
+- (CGSize)sizeOfSphereCenterView {
+    return CGSizeMake(100, 100);
+}
+
+- (CGSize)sphereView:(AISphereView *)sphereView sizeForItemViewAtIndex:(NSUInteger)index {
+    return CGSizeMake(76, 76);
+}
+
+- (UIView *)sphereCenterView {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor blueColor];
+    return view;
+}
+
+- (NSUInteger)numberOfSphereItemViews {
+    return 10;
+}
+
+- (UIView *)sphereView:(AISphereView *)sphereView itemViewAtIndex:(NSUInteger)index {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor redColor];
+    return view;
+}
+
+- (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view {
+    [UIView animateWithDuration:0.3 animations:^{
+        view.transform = CGAffineTransformMakeScale(2., 2.);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 animations:^{
+            view.transform = CGAffineTransformMakeScale(1., 1.);
+        } completion:^(BOOL finished) {
+        }];
+    }];
 }
 
 @end
+
