@@ -348,7 +348,6 @@ const CGFloat AIAnmationDuration = 0.5;
         CGPoint velocityP = [gesture velocityInView:self];
         velocity = sqrt(velocityP.x * velocityP.x + velocityP.y * velocityP.y);
         [self inertiaStart];
-        
     }
 }
 
