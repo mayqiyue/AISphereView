@@ -15,6 +15,7 @@ struct AIPoint {
 };
 
 typedef struct AIPoint AIPoint;
+typedef struct AIPoint AIPostion;
 
 
 AIPoint AIPointMake(CGFloat x, CGFloat y, CGFloat z) {

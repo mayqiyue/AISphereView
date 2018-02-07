@@ -22,4 +22,6 @@
 
 - (void)animateToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
 
+@property (nonatomic, copy) UIColor *lineColor;
+
 @end

@@ -8,7 +8,7 @@
 #import "AISphereView.h"
 #import "AIMatrix.h"
 
-const CGFloat AIAnmationDuration = 2.5f;
+const CGFloat AIAnmationDuration = 0.25;
 
 @interface AISphereView ()
 {
@@ -64,6 +64,7 @@ const CGFloat AIAnmationDuration = 2.5f;
 
 - (void)commonInit
 {
+    _lineColor = [UIColor redColor];
     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGesture];
     
@@ -128,31 +129,15 @@ const CGFloat AIAnmationDuration = 2.5f;
     self.items = [NSMutableArray arrayWithArray:items];
     self.lines = [[NSMutableArray alloc] init];
     self.coordinate = [[NSMutableArray alloc] init];
-    self.lineContentView = [UIView new];
+    self.lineContentView = [[UIView alloc] initWithFrame:self.bounds];
     
     [self addSubview:self.lineContentView];
     [self addSubview:centerView];
-    
-    for (NSInteger i = 0; i < self.items.count; i ++) {
-        CAShapeLayer *line = [CAShapeLayer layer];
-        line.frame = self.bounds;
-        line.opacity = 0.0;
-        [self.lines addObject:line];
-        [self.lineContentView.layer addSublayer:line];
-        self.lineContentView.bounds = centerView.bounds;
-        self.lineContentView.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
-        
-        UIView *view = self.items[i];
-        [self addSubview:view];
-        view.alpha = 0.0;
-        view.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
-    }
-    
+
     CGFloat p1 = M_PI * (3 - sqrt(5));
     CGFloat p2 = 2. / self.items.count;
-    
+
     for (NSInteger i = 0; i < self.items.count; i ++) {
-        
         CGFloat y = i * p2 - 1 + (p2 / 2);
         CGFloat r = sqrt(1 - y * y);
         CGFloat p3 = i * p1;
@@ -164,22 +149,46 @@ const CGFloat AIAnmationDuration = 2.5f;
         [self.coordinate addObject:value];
     }
     
-//    [UIView animateWithDuration:AIAnmationDuration animations:^{
-//        for (NSInteger i = 0; i < self.items.count; i ++) {
-//            NSValue *value = [self.coordinate objectAtIndex:i];
-//            AIPoint point;
-//            [value getValue:&point];
-//            [self setTagOfPoint:point andIndex:i];
-//        }
-//        self.lineContentView.bounds = self.bounds;
-//    } completion:^(BOOL finished) {
-//        NSInteger a =  arc4random() % 10 - 5;
-//        NSInteger b =  arc4random() % 10 - 5;
-//        normalDirection = AIPointMake(a, b, 0);
-//        panGesture.enabled = true;
-//        self.isMoving = false;
-//        [self timerStart];
-//    }];
+    for (NSInteger i = 0; i < self.items.count; i ++) {
+        CAShapeLayer *line = [CAShapeLayer layer];
+        line.frame = self.bounds;
+        line.opacity = 0.0;
+        [self.lines addObject:line];
+    }
+    
+    for (NSInteger i = 0; i < self.items.count; i ++) {
+        NSValue *value = self.coordinate[i];
+        AIPoint point;
+        [value getValue:&point];
+        
+        CAShapeLayer *layer = self.lines[i];
+        [self.lineContentView.layer addSublayer:layer];
+        [self drawLineForPoint:point atIndex:i];
+        
+        UIView *view = self.items[i];
+        [self addSubview:view];
+        view.alpha = 0.0;
+        view.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
+    }
+
+    self.lineContentView.transform = CGAffineTransformMakeScale(centerView.frame.size.width/self.bounds.size.width, centerView.frame.size.width/self.bounds.size.width);
+    
+    [UIView animateWithDuration:AIAnmationDuration animations:^{
+        for (NSInteger i = 0; i < self.items.count; i ++) {
+            NSValue *value = [self.coordinate objectAtIndex:i];
+            AIPoint point;
+            [value getValue:&point];
+            [self setTagOfPoint:point andIndex:i];
+        }
+        self.lineContentView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        NSInteger a =  arc4random() % 10 - 5;
+        NSInteger b =  arc4random() % 10 - 5;
+        normalDirection = AIPointMake(a, b, 0);
+        panGesture.enabled = true;
+        self.isMoving = false;
+        [self timerStart];
+    }];
 }
 
 #pragma mark - set frame of point
@@ -199,26 +208,40 @@ const CGFloat AIAnmationDuration = 2.5f;
 
 - (void)setTagOfPoint:(AIPoint)point andIndex:(NSInteger)index
 {
-    UIView *view = [self.items objectAtIndex:index];
-    view.center = CGPointMake((point.x + 1) * (self.frame.size.width / 2.), (point.y + 1) * self.frame.size.width / 2.);
+    AIPostion p = [self actualPostionOf:point atIndex:index];
     
-    CGFloat transform = (point.z + 2) / 3;
+    UIView *view = [self.items objectAtIndex:index];
+    view.center = CGPointMake(p.x, p.y);
+    
+    CGFloat transform = p.z;
     view.transform = CGAffineTransformScale(CGAffineTransformIdentity, transform, transform);
     view.layer.zPosition = transform;
     view.alpha = transform;
     view.userInteractionEnabled = NO;
     
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)];
-    [path addLineToPoint:view.center];
+    [self drawLineForPoint:point atIndex:index];
+}
+
+- (void)drawLineForPoint:(AIPoint)point atIndex:(NSUInteger)index
+{
+    AIPostion p = [self actualPostionOf:point atIndex:index];
     
     CAShapeLayer *line = [self.lines objectAtIndex:index];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(line.bounds.size.width/2.0f, line.bounds.size.height/2.0f)];
+    [path addLineToPoint:CGPointMake(p.x, p.y)];
+    
     line.path = path.CGPath;
     line.fillColor = [UIColor clearColor].CGColor;
-    line.strokeColor = [UIColor redColor].CGColor;
+    line.strokeColor = self.lineColor.CGColor;
     line.lineWidth = 2.0;
-    line.opacity = transform;
+    line.opacity = p.z;
     [line setNeedsDisplay];
+}
+
+- (AIPostion)actualPostionOf:(AIPoint)point atIndex:(NSInteger)index
+{
+    return AIPointMake((point.x + 1) * (self.frame.size.width / 2.0), (point.y + 1) * (self.frame.size.width / 2.0), (point.z + 2)/3.0);
 }
 
 #pragma mark - autoTurnRotation
