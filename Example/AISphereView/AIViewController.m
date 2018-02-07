@@ -9,7 +9,7 @@
 #import "AIViewController.h"
 #import <AISphereView/AISphereView.h>
 
-@interface AIViewController () <AISphereViewDataSource, AISphereViewDelegate>
+@interface AIViewController () <AISphereViewDelegate>
 
 @property (nonatomic, strong) AISphereView *sphereView;
 @property (nonatomic, strong) UIButton *button;
@@ -22,8 +22,14 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.sphereView];
-    [self.sphereView reloadData];
-    
+   
+    NSUInteger i = 3 + arc4random() % 10;
+    NSMutableArray *views = [NSMutableArray new];
+    for (NSUInteger j = 0; j < i; j ++) {
+        [views addObject:[self itemViewAtIndex:j]];
+    }
+    [self.sphereView animateToCenter:[self sphereCenterView] withItems:views];
+
     [self.view addSubview:self.button];
     self.button.translatesAutoresizingMaskIntoConstraints = false;
     [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = true;
@@ -41,33 +47,20 @@
 - (AISphereView *)sphereView {
     if (!_sphereView) {
         _sphereView = [[AISphereView alloc] initWithFrame:CGRectMake(0, 100, 375, 375)];
-        _sphereView.dataSource = self;
         _sphereView.delegate = self;
     }
     return _sphereView;
 }
 
-- (CGSize)sizeOfSphereCenterView {
-    return CGSizeMake(76, 76);
-}
-
-- (CGSize)sphereView:(AISphereView *)sphereView sizeForItemViewAtIndex:(NSUInteger)index {
-    return CGSizeMake(100, 100);
-}
-
 - (UIView *)sphereCenterView {
-    UIView *view = [UIView new];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 76, 76)];
     view.backgroundColor = [UIColor blueColor];
     view.layer.cornerRadius = 38;
     return view;
 }
 
-- (NSUInteger)numberOfSphereItemViews {
-    return 10;
-}
-
-- (UIView *)sphereView:(AISphereView *)sphereView itemViewAtIndex:(NSUInteger)index {
-    UILabel *view = [UILabel new];
+- (UIView *)itemViewAtIndex:(NSUInteger)index {
+    UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     view.backgroundColor = [UIColor redColor];
     view.layer.cornerRadius = 50;
     view.clipsToBounds = true;
@@ -76,11 +69,21 @@
 }
 
 - (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view {
-    [self.sphereView animateSphereItemViewToCenter:view];
+    NSUInteger i = 3 + arc4random() % 10;
+    NSMutableArray *views = [NSMutableArray new];
+    for (NSUInteger j = 0; j < i; j ++) {
+        [views addObject:[self itemViewAtIndex:j]];
+    }
+    [self.sphereView animateToCenter:view withItems:views];
 }
 
 - (void)buttonAction:(id)sender {
-    [self.sphereView reloadData];
+    NSUInteger i = 3 + arc4random() % 10;
+    NSMutableArray *views = [NSMutableArray new];
+    for (NSUInteger j = 0; j < i; j ++) {
+        [views addObject:[self itemViewAtIndex:j]];
+    }
+    [self.sphereView animateToCenter:[self sphereCenterView] withItems:views];
 }
 
 - (UIButton *)button {
