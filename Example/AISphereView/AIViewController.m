@@ -12,6 +12,7 @@
 @interface AIViewController () <AISphereViewDataSource, AISphereViewDelegate>
 
 @property (nonatomic, strong) AISphereView *sphereView;
+@property (nonatomic, strong) UIButton *button;
 
 @end
 
@@ -22,6 +23,13 @@
     [super viewDidLoad];
     [self.view addSubview:self.sphereView];
     [self.sphereView reloadData];
+    
+    [self.view addSubview:self.button];
+    self.button.translatesAutoresizingMaskIntoConstraints = false;
+    [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = true;
+    [self.button.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
+    [self.button.heightAnchor constraintEqualToConstant:44].active = true;
+    [self.button.widthAnchor constraintEqualToConstant:100].active = true;
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,16 +48,17 @@
 }
 
 - (CGSize)sizeOfSphereCenterView {
-    return CGSizeMake(100, 100);
+    return CGSizeMake(76, 76);
 }
 
 - (CGSize)sphereView:(AISphereView *)sphereView sizeForItemViewAtIndex:(NSUInteger)index {
-    return CGSizeMake(76, 76);
+    return CGSizeMake(100, 100);
 }
 
 - (UIView *)sphereCenterView {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor blueColor];
+    view.layer.cornerRadius = 38;
     return view;
 }
 
@@ -58,21 +67,30 @@
 }
 
 - (UIView *)sphereView:(AISphereView *)sphereView itemViewAtIndex:(NSUInteger)index {
-    UIView *view = [UIView new];
+    UILabel *view = [UILabel new];
     view.backgroundColor = [UIColor redColor];
+    view.layer.cornerRadius = 50;
+    view.clipsToBounds = true;
+    view.text = @(index).stringValue;
     return view;
 }
 
 - (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view {
-    [UIView animateWithDuration:0.3 animations:^{
-        view.transform = CGAffineTransformMakeScale(2., 2.);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            view.transform = CGAffineTransformMakeScale(1., 1.);
-        } completion:^(BOOL finished) {
-        }];
-    }];
+    [self.sphereView animateSphereItemViewToCenter:view];
 }
 
+- (void)buttonAction:(id)sender {
+    [self.sphereView reloadData];
+}
+
+- (UIButton *)button {
+    if (!_button) {
+        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_button setTitle:@"RESET" forState:UIControlStateNormal];
+        [_button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    }
+    return _button;
+}
 @end
 
