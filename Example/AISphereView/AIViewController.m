@@ -46,8 +46,9 @@
 
 - (AISphereView *)sphereView {
     if (!_sphereView) {
-        _sphereView = [[AISphereView alloc] initWithFrame:CGRectMake(0, 100, 375, 375)];
+        _sphereView = [[AISphereView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.width)];
         _sphereView.delegate = self;
+        _sphereView.lineColor = [UIColor greenColor];
     }
     return _sphereView;
 }
