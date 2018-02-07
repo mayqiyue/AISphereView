@@ -118,12 +118,9 @@ const CGFloat AIAnmationDuration = 0.5;
         x = y * r;
     }
    
-    self.lineContentView.alpha = 0.0;
     [UIView animateWithDuration:AIAnmationDuration animations:^{
         for (UIView *v in oldViews) {
-            if (![v isEqual:self.lineContentView]) {
-                v.alpha *= 0.2;
-            }
+            v.alpha = 0;
             v.center = CGPointMake(v.center.x + x, v.center.y + y);
             v.transform = CGAffineTransformScale(v.transform, 1.3/s, 1.3/s);
         }
