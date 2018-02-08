@@ -8,7 +8,7 @@
 #import "AISphereView.h"
 #import "AIMatrix.h"
 
-const CGFloat AIAnmationDuration = 0.5;
+const CGFloat AIAnmationDuration = 0.3;
 
 @interface AISphereView ()
 {
@@ -122,7 +122,7 @@ const CGFloat AIAnmationDuration = 0.5;
         for (UIView *v in oldViews) {
             v.alpha = 0;
             v.center = CGPointMake(v.center.x + x, v.center.y + y);
-            v.transform = CGAffineTransformScale(v.transform, 1.3/s, 1.3/s);
+            v.transform = CGAffineTransformScale(v.transform, 2/s, 2/s);
         }
     } completion:^(BOOL finished) {
         [oldViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
