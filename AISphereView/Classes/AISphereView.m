@@ -103,26 +103,28 @@ const CGFloat AIAnmationDuration = 0.3;
         [oldViews addObject:self.lineContentView];
     }
     [oldViews removeObject:centerView];
-   
-    CGFloat x = self.centerView.center.x - centerView.center.x;
-    CGFloat y = self.centerView.center.y - centerView.center.y;
+
+    self.lineContentView.alpha = 0.0;
     CGFloat s = self.centerView.frame.size.width / centerView.frame.size.width;
-    if (fabs(x) > fabs(y)) {
-        CGFloat r = y / x;
-        x = self.frame.size.width/2.0f * (x > 0 ? 1 : -1);
-        y = x * r;
-    }
-    else {
-        CGFloat r = x / y;
-        y = self.frame.size.width/2.0f * (y > 0 ? 1 : -1);
-        x = y * r;
-    }
-   
-    [UIView animateWithDuration:AIAnmationDuration animations:^{
+    
+    [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         for (UIView *v in oldViews) {
+            CGFloat x = v.center.x - centerView.center.x;
+            CGFloat y = v.center.y - centerView.center.y;
+            if (fabs(x) > fabs(y)) {
+                CGFloat r = y / x;
+                x = self.frame.size.width/2.0f * (x > 0 ? 1 : -1) * 0.8;
+                y = x * r;
+            }
+            else {
+                CGFloat r = x / y;
+                y = self.frame.size.width/2.0f * (y > 0 ? 1 : -1) * 0.8;
+                x = y * r;
+            }
+            
             v.alpha = 0;
             v.center = CGPointMake(v.center.x + x, v.center.y + y);
-            v.transform = CGAffineTransformScale(v.transform, 2/s, 2/s);
+            v.transform = CGAffineTransformScale(v.transform, 1.5/s, 1.5/s);
         }
     } completion:^(BOOL finished) {
         [oldViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -130,7 +132,7 @@ const CGFloat AIAnmationDuration = 0.3;
         [self _internalAnimate:centerView withItems:items];
     }];
     
-    [UIView animateWithDuration:AIAnmationDuration * 1.5 animations:^{
+    [UIView animateWithDuration:AIAnmationDuration * 1.8 animations:^{
         centerView.alpha = 1.0;
         centerView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
         centerView.transform = CGAffineTransformScale(centerView.transform, s, s);
@@ -185,7 +187,7 @@ const CGFloat AIAnmationDuration = 0.3;
         view.center = CGPointMake(self.frame.size.width / 2., self.frame.size.height / 2.);
         view.transform = CGAffineTransformMakeScale(0.2, 0.2);
     }
-
+    
     self.lineContentView.transform = CGAffineTransformMakeScale(centerView.frame.size.width/self.bounds.size.width, centerView.frame.size.width/self.bounds.size.width);
     
     [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -203,6 +205,10 @@ const CGFloat AIAnmationDuration = 0.3;
         panGesture.enabled = true;
         self.isMoving = false;
         [self timerStart];
+        
+        if ([self.delegate respondsToSelector:@selector(sphereView:animationCompletion:)]) {
+            [self.delegate sphereView:self animationCompletion:finished];
+        }
     }];
 }
 

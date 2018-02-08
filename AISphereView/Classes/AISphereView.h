@@ -12,7 +12,9 @@
 @protocol AISphereViewDelegate <NSObject>
 
 @optional
+
 - (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view;
+- (void)sphereView:(AISphereView *)sphereView animationCompletion:(BOOL)finished;
 
 @end
 

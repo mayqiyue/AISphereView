@@ -62,7 +62,7 @@
 
 - (UIView *)itemViewAtIndex:(NSUInteger)index {
     UILabel *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    view.backgroundColor = [UIColor redColor];
+    view.backgroundColor = [UIColor colorWithRed:arc4random()%255 / 255.0 green:arc4random()%255 / 255.0 blue:arc4random()%255 / 255.0 alpha:1];
     view.layer.cornerRadius = 50;
     view.clipsToBounds = true;
     view.text = @(index).stringValue;
