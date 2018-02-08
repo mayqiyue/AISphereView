@@ -19,9 +19,13 @@
 @interface AISphereView : UIView
 
 @property (nonatomic, weak) id<AISphereViewDelegate> delegate;
+@property (nonatomic, copy) UIColor *lineColor;
 
 - (void)animateToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
 
-@property (nonatomic, copy) UIColor *lineColor;
+- (void)timerStart;
+
+- (void)timerStop;
+
 
 @end
