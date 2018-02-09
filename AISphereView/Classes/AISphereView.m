@@ -78,6 +78,10 @@ const CGFloat AIAnmationDuration = 0.3;
     [timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
+- (void)dealloc
+{
+}
+
 - (void)animateToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items
 {
     if (![self.subviews containsObject:centerView]) {
@@ -134,6 +138,7 @@ const CGFloat AIAnmationDuration = 0.3;
     
     [UIView animateWithDuration:AIAnmationDuration * 1.8 animations:^{
         centerView.alpha = 1.0;
+        centerView.layer.zPosition = 0;
         centerView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
         centerView.transform = CGAffineTransformScale(centerView.transform, s, s);
     } completion:^(BOOL finished) {
@@ -282,7 +287,6 @@ const CGFloat AIAnmationDuration = 0.3;
     for (NSInteger i = 0; i < self.items.count; i ++) {
         [self updateFrameOfPoint:i direction:normalDirection andAngle:0.002];
     }
-    
 }
 
 #pragma mark - inertia
