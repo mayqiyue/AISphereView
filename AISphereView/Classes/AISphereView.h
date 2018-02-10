@@ -14,7 +14,8 @@
 @optional
 
 - (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view;
-- (void)sphereView:(AISphereView *)sphereView animationCompletion:(BOOL)finished;
+- (void)sphereView:(AISphereView *)sphereView pushAnimationCompletion:(BOOL)finished;
+- (void)sphereView:(AISphereView *)sphereView popAnimationCompletion:(BOOL)finished;
 
 @end
 
@@ -22,8 +23,12 @@
 
 @property (nonatomic, weak) id<AISphereViewDelegate> delegate;
 @property (nonatomic, copy) UIColor *lineColor;
+@property (nonatomic, assign, readonly) NSUInteger stackDepth;
+@property (nonatomic, strong, readonly) NSArray <__kindof UIView *>*items;
 
-- (void)animateToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
+- (void)pushToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
+
+- (void)popToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
 
 - (void)timerStart;
 

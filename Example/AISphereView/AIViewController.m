@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) AISphereView *sphereView;
 @property (nonatomic, strong) UIButton *button;
-
+@property (nonatomic, strong) NSMutableArray *stack;
 @end
 
 @implementation AIViewController
@@ -28,12 +28,12 @@
     for (NSUInteger j = 0; j < i; j ++) {
         [views addObject:[self itemViewAtIndex:j]];
     }
-    [self.sphereView animateToCenter:[self sphereCenterView] withItems:views];
+    [self.sphereView pushToCenter:[self sphereCenterView] withItems:views];
 
     [self.view addSubview:self.button];
     self.button.translatesAutoresizingMaskIntoConstraints = false;
     [self.button.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = true;
-    [self.button.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
+    [self.button.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = true;
     [self.button.heightAnchor constraintEqualToConstant:44].active = true;
     [self.button.widthAnchor constraintEqualToConstant:100].active = true;
 }
@@ -69,32 +69,54 @@
     return view;
 }
 
+#pragma mark - SphereView delegate
+
 - (void)sphereView:(AISphereView *)sphereView didSelectItem:(UIView *)view {
     NSUInteger i = 3 + arc4random() % 10;
     NSMutableArray *views = [NSMutableArray new];
     for (NSUInteger j = 0; j < i; j ++) {
         [views addObject:[self itemViewAtIndex:j]];
     }
-    [self.sphereView animateToCenter:view withItems:views];
+    [self.stack addObject:@(self.sphereView.items.count)];
+    [self.sphereView pushToCenter:view withItems:views];
 }
 
+- (void)sphereView:(AISphereView *)sphereView pushAnimationCompletion:(BOOL)finished {
+}
+
+- (void)sphereView:(AISphereView *)sphereView popAnimationCompletion:(BOOL)finished {
+    [self.stack removeLastObject];
+//    self.button.userInteractionEnabled = sphereView.stackDepth > 0;
+    [self.button setTitle:sphereView.stackDepth > 0 ? @"isInTop" : @"Back" forState:UIControlStateNormal];
+}
+
+#pragma mark -
+
 - (void)buttonAction:(id)sender {
-    NSUInteger i = 3 + arc4random() % 10;
+    NSUInteger i = [self.stack.lastObject unsignedIntegerValue];
     NSMutableArray *views = [NSMutableArray new];
     for (NSUInteger j = 0; j < i; j ++) {
-        [views addObject:[self itemViewAtIndex:j]];
+        UIView *view = [self itemViewAtIndex:j];
+        [views addObject:view];
     }
-    [self.sphereView animateToCenter:[self sphereCenterView] withItems:views];
+    [self.sphereView popToCenter:[self sphereCenterView] withItems:views];
 }
 
 - (UIButton *)button {
     if (!_button) {
         _button = [UIButton buttonWithType:UIButtonTypeCustom];
         [_button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_button setTitle:@"RESET" forState:UIControlStateNormal];
-        [_button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [_button setTitle:@"Back" forState:UIControlStateNormal];
+        [_button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
     return _button;
+}
+
+- (NSMutableArray *)stack {
+    if (!_stack) {
+        _stack = [[NSMutableArray alloc] init];
+    }
+    return _stack;
 }
 @end
 

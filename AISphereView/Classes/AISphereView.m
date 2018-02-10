@@ -10,6 +10,22 @@
 
 const CGFloat AIAnmationDuration = 0.3;
 
+@interface AICoodinateStackItem : NSObject
+
+@property (nonatomic, assign) NSUInteger index;
+
+@property (nonatomic, assign) CGFloat scale; // scale for transform
+@property (nonatomic, strong) NSArray <NSValue *>*beforeAnimPoints;
+@property (nonatomic, strong) NSArray <NSValue *>*afterAnimPoints;
+
+@property (nonatomic, assign) AIPoint ca; // point after animation of prior center view.
+
+
+@end
+
+@implementation AICoodinateStackItem
+@end
+
 @interface AISphereView ()
 {
     AIPoint normalDirection;
@@ -24,11 +40,14 @@ const CGFloat AIAnmationDuration = 0.3;
     CADisplayLink *inertia;
 }
 
+
 @property (nonatomic, strong) NSArray <__kindof UIView *>*items;
 @property (nonatomic, strong) UIView *centerView;
 @property (nonatomic, strong) UIView *lineContentView;
 @property (nonatomic, strong) NSMutableArray <CAShapeLayer *>*lines;
 @property (nonatomic, strong) NSMutableArray *coordinate;
+
+@property (nonatomic, strong) NSMutableArray *coordinateStack;
 
 @property (nonatomic, assign) BOOL isMoving;
 
@@ -76,13 +95,17 @@ const CGFloat AIAnmationDuration = 0.3;
     
     timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(autoTurnRotation)];
     [timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+
+    _coordinateStack = [NSMutableArray new];
 }
 
 - (void)dealloc
 {
 }
 
-- (void)animateToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items
+#pragma mark - Public
+
+- (void)pushToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items
 {
     if (![self.subviews containsObject:centerView]) {
         self.centerView = centerView;
@@ -91,11 +114,8 @@ const CGFloat AIAnmationDuration = 0.3;
         [self _internalAnimate:centerView withItems:items];
         return;
     }
-    
     self.isMoving = true;
-    panGesture.enabled = false;
-    [self timerStop];
-
+    
     NSMutableArray *oldViews = [NSMutableArray new];
     if (self.items) {
         [oldViews addObjectsFromArray:self.items];
@@ -111,6 +131,12 @@ const CGFloat AIAnmationDuration = 0.3;
     self.lineContentView.alpha = 0.0;
     CGFloat s = self.centerView.frame.size.width / centerView.frame.size.width;
     
+    AICoodinateStackItem *stackItem = [AICoodinateStackItem new];
+    stackItem.beforeAnimPoints = [self.coordinate copy];
+    stackItem.index = [self.items indexOfObject:centerView];
+    stackItem.scale = s;
+    [self.coordinateStack addObject:stackItem];
+
     [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         for (UIView *v in oldViews) {
             CGFloat x = v.center.x - centerView.center.x;
@@ -130,6 +156,15 @@ const CGFloat AIAnmationDuration = 0.3;
             v.center = CGPointMake(v.center.x + x, v.center.y + y);
             v.transform = CGAffineTransformScale(v.transform, 1.5/s, 1.5/s);
         }
+        
+        NSMutableArray *array = [NSMutableArray new];
+        for (UIView *view in self.items) {
+            AIPoint p = AIPointMake(view.center.x, view.center.y, view.layer.zPosition);
+            NSValue *value = [NSValue value:&p withObjCType:@encode(AIPoint)];
+            [array addObject:value];
+        }
+        stackItem.afterAnimPoints = array;
+        stackItem.ca = AIPointMake(self.centerView.center.x, self.centerView.center.y, self.centerView.layer.zPosition);
     } completion:^(BOOL finished) {
         [oldViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         self.centerView = centerView;
@@ -142,6 +177,122 @@ const CGFloat AIAnmationDuration = 0.3;
         centerView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
         centerView.transform = CGAffineTransformScale(centerView.transform, s, s);
     } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)popToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
+{
+    AICoodinateStackItem *stackTop = self.coordinateStack.lastObject;
+    if (!stackTop) {
+        return;
+    }
+    self.isMoving = true;
+    NSAssert(items.count == stackTop.beforeAnimPoints.count, @"The items count %ld not equal to stack's count %ld", items.count, stackTop.beforeAnimPoints.count);
+    NSAssert(stackTop.beforeAnimPoints.count == stackTop.beforeAnimPoints.count, @"The points count not the same");
+
+    UIView *cview = self.centerView;
+    [UIView animateWithDuration:AIAnmationDuration * 1.5 delay:AIAnmationDuration * 0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        AIPoint p;
+        NSValue *value = [stackTop.beforeAnimPoints objectAtIndex:stackTop.index];
+        [value getValue:&p];
+        p = [self actualPostionOf:p];
+        
+        cview.center = CGPointMake(p.x, p.y);
+        cview.transform = CGAffineTransformScale(CGAffineTransformIdentity, p.z, p.z);
+        cview.layer.zPosition = p.z;
+        cview.alpha = p.z;
+    } completion:^(BOOL finished) {
+    }];
+
+    [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        for (NSInteger i = 0; i < self.items.count; i ++) {
+            UIView *view = [self.items objectAtIndex:i];
+            view.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0);
+            view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+            view.alpha = 0.0f;
+        }
+        self.lineContentView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        self.lineContentView.alpha = 0.1;
+    } completion:^(BOOL finished) {
+        
+        [self.items makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.lines makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        [self.lines removeAllObjects];
+        self.items = items;
+        self.centerView = centerView;
+        self.coordinate = stackTop.beforeAnimPoints.mutableCopy;
+ 
+        for (NSInteger i = 0; i < items.count; i ++) {
+            CAShapeLayer *line = [CAShapeLayer layer];
+            line.frame = self.bounds;
+            line.opacity = 0.0;
+            [self.lines addObject:line];
+            [self.lineContentView.layer addSublayer:line];
+        }
+
+        for (NSInteger i = 0; i < items.count; i ++) {
+            UIView *view = items[i];
+            
+            [self addSubview:view];
+
+            NSValue *value = [stackTop.afterAnimPoints objectAtIndex:i];
+            AIPoint p;
+            [value getValue:&p];
+            
+            view.center = CGPointMake(p.x, p.y);
+            view.layer.zPosition = p.z;
+            view.transform = CGAffineTransformScale(CGAffineTransformScale(CGAffineTransformIdentity, p.z, p.z), 1.5/stackTop.scale, 1.5/stackTop.scale);
+            view.alpha = p.z;
+            if (i == stackTop.index) {
+                view.hidden = YES;
+            }
+            
+            {
+                NSValue *value = [stackTop.beforeAnimPoints objectAtIndex:i];
+                AIPoint p;
+                [value getValue:&p];
+                [self drawLineForPoint:p atIndex:i];
+            }
+        }
+        [self addSubview:centerView];
+        AIPoint p = stackTop.ca;
+        centerView.center = CGPointMake(p.x, p.y);
+        centerView.layer.zPosition = p.z;
+        centerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.5/stackTop.scale, 1.5/stackTop.scale);
+        centerView.alpha = p.z;
+        
+
+        [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.lineContentView.transform = CGAffineTransformMakeScale(1, 1);
+            self.lineContentView.alpha = 1.0;
+            for (NSInteger i = 0; i < items.count; i ++) {
+                UIView *view = items[i];
+                
+                NSValue *value = [stackTop.beforeAnimPoints objectAtIndex:i];
+                AIPoint p; [value getValue:&p];
+                p = [self actualPostionOf:p];
+                
+                view.center = CGPointMake(p.x, p.y);
+                view.layer.zPosition = p.z;
+                view.transform = CGAffineTransformScale(CGAffineTransformIdentity, p.z, p.z);
+                view.alpha = p.z;
+            }
+            centerView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
+            centerView.layer.zPosition = 0;
+            centerView.transform = CGAffineTransformIdentity;
+            centerView.alpha = 1.0;
+            
+        } completion:^(BOOL finished) {
+            items[stackTop.index].hidden = false;
+            [cview removeFromSuperview];
+
+            self.isMoving = false;
+            [self.coordinateStack removeLastObject];
+            normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
+            if ([self.delegate respondsToSelector:@selector(sphereView:popAnimationCompletion:)]) {
+                [self.delegate sphereView:self popAnimationCompletion:finished];
+            }
+        }];
     }];
 }
 
@@ -204,15 +355,11 @@ const CGFloat AIAnmationDuration = 0.3;
         }
         self.lineContentView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
-        NSInteger a =  arc4random() % 10 - 5;
-        NSInteger b =  arc4random() % 10 - 5;
-        normalDirection = AIPointMake(a, b, 0);
-        panGesture.enabled = true;
+        normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
         self.isMoving = false;
-        [self timerStart];
-        
-        if ([self.delegate respondsToSelector:@selector(sphereView:animationCompletion:)]) {
-            [self.delegate sphereView:self animationCompletion:finished];
+
+        if ([self.delegate respondsToSelector:@selector(sphereView:pushAnimationCompletion:)]) {
+            [self.delegate sphereView:self pushAnimationCompletion:finished];
         }
     }];
 }
@@ -234,7 +381,7 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)setTagOfPoint:(AIPoint)point andIndex:(NSInteger)index
 {
-    AIPostion p = [self actualPostionOf:point atIndex:index];
+    AIPostion p = [self actualPostionOf:point];
     
     UIView *view = [self.items objectAtIndex:index];
     view.center = CGPointMake(p.x, p.y);
@@ -250,7 +397,7 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)drawLineForPoint:(AIPoint)point atIndex:(NSUInteger)index
 {
-    AIPostion p = [self actualPostionOf:point atIndex:index];
+    AIPostion p = [self actualPostionOf:point];
     
     CAShapeLayer *line = [self.lines objectAtIndex:index];
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -265,7 +412,7 @@ const CGFloat AIAnmationDuration = 0.3;
     [line setNeedsDisplay];
 }
 
-- (AIPostion)actualPostionOf:(AIPoint)point atIndex:(NSInteger)index
+- (AIPostion)actualPostionOf:(AIPoint)point
 {
     return AIPointMake((point.x + 1) * (self.frame.size.width / 2.0), (point.y + 1) * (self.frame.size.width / 2.0), (point.z + 2)/3.0);
 }
@@ -359,6 +506,22 @@ const CGFloat AIAnmationDuration = 0.3;
         velocity = sqrt(velocityP.x * velocityP.x + velocityP.y * velocityP.y);
         [self inertiaStart];
     }
+}
+
+- (void)setIsMoving:(BOOL)isMoving
+{
+    _isMoving = isMoving;
+    panGesture.enabled = !isMoving;
+    if (isMoving) {
+        [self timerStop];
+    }
+    else {
+        [self timerStart];
+    }
+}
+
+- (NSUInteger)stackDepth {
+    return  self.coordinateStack.count;
 }
 
 @end
