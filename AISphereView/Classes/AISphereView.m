@@ -190,6 +190,7 @@ const CGFloat AIAnmationDuration = 0.3;
     NSAssert(items.count == stackTop.beforeAnimPoints.count, @"The items count %ld not equal to stack's count %ld", items.count, stackTop.beforeAnimPoints.count);
     NSAssert(stackTop.beforeAnimPoints.count == stackTop.beforeAnimPoints.count, @"The points count not the same");
 
+    //Animations 1
     UIView *cview = self.centerView;
     [UIView animateWithDuration:AIAnmationDuration * 1.5 delay:AIAnmationDuration * 0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
         AIPoint p;
@@ -204,6 +205,7 @@ const CGFloat AIAnmationDuration = 0.3;
     } completion:^(BOOL finished) {
     }];
 
+    //Animations 2
     [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         for (NSInteger i = 0; i < self.items.count; i ++) {
             UIView *view = [self.items objectAtIndex:i];
@@ -214,6 +216,8 @@ const CGFloat AIAnmationDuration = 0.3;
         self.lineContentView.transform = CGAffineTransformMakeScale(0.1, 0.1);
         self.lineContentView.alpha = 0.1;
     } completion:^(BOOL finished) {
+        self.lineContentView.transform = CGAffineTransformIdentity;
+        self.lineContentView.alpha = 0.3;
         
         [self.items makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [self.lines makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
@@ -246,13 +250,6 @@ const CGFloat AIAnmationDuration = 0.3;
             if (i == stackTop.index) {
                 view.hidden = YES;
             }
-            
-            {
-                NSValue *value = [stackTop.beforeAnimPoints objectAtIndex:i];
-                AIPoint p;
-                [value getValue:&p];
-                [self drawLineForPoint:p atIndex:i];
-            }
         }
         [self addSubview:centerView];
         AIPoint p = stackTop.ca;
@@ -261,10 +258,21 @@ const CGFloat AIAnmationDuration = 0.3;
         centerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.5/stackTop.scale, 1.5/stackTop.scale);
         centerView.alpha = p.z;
         
+        self.lineContentView.center = centerView.center;
 
+        //Animations 3
         [UIView animateWithDuration:AIAnmationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.lineContentView.transform = CGAffineTransformMakeScale(1, 1);
+            self.lineContentView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
             self.lineContentView.alpha = 1.0;
+            for (NSInteger i = 0; i < items.count; i ++) {
+                {
+                    NSValue *value = [stackTop.beforeAnimPoints objectAtIndex:i];
+                    AIPoint p;
+                    [value getValue:&p];
+                    [self drawLineForPoint:[self actualPostionOf:p] atIndex:i];
+                }
+            }
+            
             for (NSInteger i = 0; i < items.count; i ++) {
                 UIView *view = items[i];
                 
@@ -335,7 +343,7 @@ const CGFloat AIAnmationDuration = 0.3;
         
         CAShapeLayer *layer = self.lines[i];
         [self.lineContentView.layer addSublayer:layer];
-        [self drawLineForPoint:point atIndex:i];
+        [self drawLineForPoint:[self actualPostionOf:point] atIndex:i];
         
         UIView *view = self.items[i];
         [self addSubview:view];
@@ -391,24 +399,22 @@ const CGFloat AIAnmationDuration = 0.3;
     view.layer.zPosition = transform;
     view.alpha = transform;
     view.userInteractionEnabled = NO;
-    
-    [self drawLineForPoint:point atIndex:index];
+ 
+    [self drawLineForPoint:p atIndex:index];
 }
 
 - (void)drawLineForPoint:(AIPoint)point atIndex:(NSUInteger)index
 {
-    AIPostion p = [self actualPostionOf:point];
-    
     CAShapeLayer *line = [self.lines objectAtIndex:index];
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(line.bounds.size.width/2.0f, line.bounds.size.height/2.0f)];
-    [path addLineToPoint:CGPointMake(p.x, p.y)];
+    [path addLineToPoint:CGPointMake(point.x, point.y)];
     
     line.path = path.CGPath;
     line.fillColor = [UIColor clearColor].CGColor;
     line.strokeColor = self.lineColor.CGColor;
     line.lineWidth = 2.0;
-    line.opacity = p.z;
+    line.opacity = point.z;
     [line setNeedsDisplay];
 }
 
@@ -520,7 +526,8 @@ const CGFloat AIAnmationDuration = 0.3;
     }
 }
 
-- (NSUInteger)stackDepth {
+- (NSUInteger)stackDepth
+{
     return  self.coordinateStack.count;
 }
 
