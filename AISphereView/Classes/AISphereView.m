@@ -107,6 +107,9 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)pushToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items
 {
+    if (self.isMoving) {
+        return;
+    }
     if (![self.subviews containsObject:centerView]) {
         self.centerView = centerView;
         self.centerView.center = CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f);
@@ -182,6 +185,10 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)popToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
 {
+    if (self.isMoving) {
+        return;
+    }
+
     AICoodinateStackItem *stackTop = self.coordinateStack.lastObject;
     if (!stackTop) {
         return;
@@ -518,6 +525,7 @@ const CGFloat AIAnmationDuration = 0.3;
 {
     _isMoving = isMoving;
     panGesture.enabled = !isMoving;
+    self.userInteractionEnabled = !isMoving;
     if (isMoving) {
         [self timerStop];
     }
