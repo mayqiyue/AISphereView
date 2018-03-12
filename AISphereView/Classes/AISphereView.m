@@ -84,6 +84,9 @@ const CGFloat AIAnmationDuration = 0.3;
 - (void)commonInit
 {
     _lineColor = [UIColor redColor];
+    _isDashLine = NO;
+    _dashLineArray = @[@0, @0];
+    _lineWidth = 2.f;
     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGesture];
     
@@ -419,8 +422,11 @@ const CGFloat AIAnmationDuration = 0.3;
     
     line.path = path.CGPath;
     line.fillColor = [UIColor clearColor].CGColor;
-    line.strokeColor = self.lineColor.CGColor;
-    line.lineWidth = 2.0;
+    line.strokeColor = _lineColor.CGColor;
+    line.lineWidth = _lineWidth;
+    if (_isDashLine && _dashLineArray.count == 2) {
+        line.lineDashPattern = _dashLineArray;
+    }
     line.opacity = point.z;
     [line setNeedsDisplay];
 }
