@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AISphereView'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'AISphereView is great.'
 
 # This description is used to generate tags and improve search results.
@@ -31,12 +31,5 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'AISphereView/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'AISphereView' => ['AISphereView/Assets/*.png']
-  # }
-
-  #s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
