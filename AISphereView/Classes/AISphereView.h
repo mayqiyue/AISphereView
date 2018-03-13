@@ -22,10 +22,14 @@
 @interface AISphereView : UIView
 
 @property (nonatomic, weak) id<AISphereViewDelegate> delegate;
+
 @property (nonatomic, copy) UIColor *lineColor;
 @property (nonatomic, assign) BOOL isDashLine;
 @property (nonatomic, assign) CGFloat lineWidth;
 @property (nonatomic, strong) NSArray *dashLineArray; // @[length, gap]
+
+@property (nonatomic, assign) CGFloat scaleFactor; // Default is 1.0
+
 @property (nonatomic, assign, readonly) NSUInteger stackDepth;
 @property (nonatomic, strong, readonly) NSArray <__kindof UIView *>*items;
 

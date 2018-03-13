@@ -1,5 +1,5 @@
 PODS:
-  - AISphereView (0.1.0)
+  - AISphereView (1.0.1)
   - Reveal-SDK (11)
 
 DEPENDENCIES:
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AISphereView: 8198872635de7056f98e28f430e72d53fafcb644
+  AISphereView: dbed49d475c7f661330ec5f7595053b94cfc39cf
   Reveal-SDK: 7fa13d04bb55db61ff2342a990cf731d5159361d
 
 PODFILE CHECKSUM: 34803bb5a84666ca679434a2b6d6fc1396b08bef

@@ -87,6 +87,7 @@ const CGFloat AIAnmationDuration = 0.3;
     _isDashLine = NO;
     _dashLineArray = @[@0, @0];
     _lineWidth = 2.f;
+    _scaleFactor = 1.0f;
     tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self addGestureRecognizer:tapGesture];
     
@@ -306,7 +307,7 @@ const CGFloat AIAnmationDuration = 0.3;
 
             self.isMoving = false;
             [self.coordinateStack removeLastObject];
-            normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
+            self->normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
             if ([self.delegate respondsToSelector:@selector(sphereView:popAnimationCompletion:)]) {
                 [self.delegate sphereView:self popAnimationCompletion:finished];
             }
@@ -373,7 +374,7 @@ const CGFloat AIAnmationDuration = 0.3;
         }
         self.lineContentView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
-        normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
+        self->normalDirection = AIPointMake(arc4random() % 10 - 5, arc4random() % 10 - 5, 0);
         self.isMoving = false;
 
         if ([self.delegate respondsToSelector:@selector(sphereView:pushAnimationCompletion:)]) {
@@ -405,7 +406,7 @@ const CGFloat AIAnmationDuration = 0.3;
     view.center = CGPointMake(p.x, p.y);
     
     CGFloat transform = p.z;
-    view.transform = CGAffineTransformScale(CGAffineTransformIdentity, transform, transform);
+    view.transform = CGAffineTransformScale(CGAffineTransformIdentity, transform * _scaleFactor, transform * _scaleFactor);
     view.layer.zPosition = transform;
     view.alpha = transform;
     view.userInteractionEnabled = NO;
@@ -473,14 +474,14 @@ const CGFloat AIAnmationDuration = 0.3;
 {
     if (velocity <= 0) {
         [self inertiaStop];
-    }else {
+    }
+    else {
         velocity -= 70.;
         CGFloat angle = velocity / self.frame.size.width * 2. * inertia.duration;
         for (NSInteger i = 0; i < self.items.count; i ++) {
             [self updateFrameOfPoint:i direction:normalDirection andAngle:angle];
         }
     }
-    
 }
 
 #pragma mark - gesture selector
