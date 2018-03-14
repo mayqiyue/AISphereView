@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AISphereView'
-  s.version          = '1.0.2'
+  s.version          = '1.0.4'
   s.summary          = 'AISphereView is great.'
 
 # This description is used to generate tags and improve search results.
@@ -17,16 +17,12 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = ""
 
   s.homepage         = 'https://github.com/mayqiyue/AISphereView'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'mayqiyue' => 'xu20121013@gmail.com' }
   s.source           = { :git => 'https://github.com/mayqiyue/AISphereView.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
