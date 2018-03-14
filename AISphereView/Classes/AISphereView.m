@@ -541,6 +541,12 @@ const CGFloat AIAnmationDuration = 0.3;
     }
 }
 
+- (void)setCenterView:(UIView *)centerView
+{
+    _centerView = centerView;
+    _centerView.layer.zPosition = 0.4; // experiemnts value, don't change it.
+}
+
 - (NSUInteger)stackDepth
 {
     return  self.coordinateStack.count;
