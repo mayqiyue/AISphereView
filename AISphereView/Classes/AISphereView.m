@@ -33,7 +33,8 @@ const CGFloat AIAnmationDuration = 0.3;
 @interface AISphereView ()
 {
     AIPoint normalDirection;
-    CGPoint last;
+    CGPoint lastPoint;
+    CMDeviceMotion *lastMotion;
    
     CGFloat velocity;
    
@@ -54,9 +55,9 @@ const CGFloat AIAnmationDuration = 0.3;
 @property (nonatomic, strong) NSMutableArray *coordinateStack;
 
 @property (nonatomic, assign) BOOL isMoving;
+@property (nonatomic, assign) BOOL isInGyro;
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
-
 
 @end
 
@@ -104,22 +105,18 @@ const CGFloat AIAnmationDuration = 0.3;
     inertia = [CADisplayLink displayLinkWithTarget:self selector:@selector(inertiaStep)];
     [inertia addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     
-    timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(autoTurnRotation)];
-    [timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    
     _coordinateStack = [NSMutableArray new];
     
-    _motionManager = [[CMMotionManager alloc] init];
-    _motionManager.deviceMotionUpdateInterval = 1;
-    if (_motionManager.isDeviceMotionAvailable) {
-        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue]withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            [self handleCoreMotion:motion];
-        }];
-    }
+    [self setEnableRotateWithGyro:true];
+    [self setEnableAutoRotate:true];
 }
 
 - (void)dealloc
 {
+    [self setEnableRotateWithGyro:false];
+    [self setEnableAutoRotate:false];
+    [inertia invalidate];
+    inertia = nil;
 }
 
 #pragma mark - Public
@@ -466,6 +463,9 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)autoTurnRotation
 {
+    if (self.isMoving || self.isInGyro || panGesture.state == UIGestureRecognizerStateChanged) {
+        return;
+    }
     for (NSInteger i = 0; i < self.items.count; i ++) {
         [self updateFrameOfPoint:i direction:normalDirection andAngle:0.002];
     }
@@ -517,23 +517,24 @@ const CGFloat AIAnmationDuration = 0.3;
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gesture
 {
     if (gesture.state == UIGestureRecognizerStateBegan) {
-        last = [gesture locationInView:self];
+        lastPoint = [gesture locationInView:self];
         [self timerStop];
         [self inertiaStop];
     }
     else if (gesture.state == UIGestureRecognizerStateChanged) {
         CGPoint current = [gesture locationInView:self];
-        AIPoint direction = AIPointMake(last.y - current.y, current.x - last.x, 0);
-        
+        AIPoint direction = AIPointMake(lastPoint.y - current.y, current.x - lastPoint.x, 0);
         CGFloat distance = sqrt(direction.x * direction.x + direction.y * direction.y) * 2;
-        
         CGFloat angle = distance / (self.frame.size.width / 2.);
         
+        NSLog(@"==============");
+        NSLog(@"direction (%lf, %lf, %lf), angle(%lf)", direction.x, direction.y, direction.z, angle);
+        NSLog(@"\n");
         for (NSInteger i = 0; i < self.items.count; i ++) {
             [self updateFrameOfPoint:i direction:direction andAngle:angle];
         }
         normalDirection = direction;
-        last = current;
+        lastPoint = current;
     }
     else if (gesture.state == UIGestureRecognizerStateEnded) {
         CGPoint velocityP = [gesture velocityInView:self];
@@ -544,16 +545,32 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)handleCoreMotion:(CMDeviceMotion *)motion
 {
-    NSLog(@"===================================================================================================");
-    NSLog(@"gravity is (%.04f, %.04f, %.04f)", motion.gravity.x, motion.gravity.y, motion.gravity.z);
-    NSLog(@"attitude (%.04f, %.04f, %.04f)", motion.attitude.roll, motion.attitude.pitch, motion.attitude.yaw);
-    NSLog(@"rotationRate (%.04f, %.04f, %.04f)", motion.rotationRate.x, motion.rotationRate.y, motion.rotationRate.z);
-    NSLog(@"userAcceleration (%.04f, %.04f, %.04f)", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
-    NSLog(@"\n");
+    if (!lastMotion) {
+        lastMotion = motion;
+    }
+    
+    if (self.isMoving || panGesture.state == UIGestureRecognizerStateChanged) {
+        self.isInGyro = false;
+        return;
+    }
+    
+    CGFloat m = 0.02;
+    if (fabs(motion.gravity.x - lastMotion.gravity.x) < m &&
+        fabs(motion.gravity.y - lastMotion.gravity.y) < m &&
+        fabs(motion.gravity.z - lastMotion.gravity.z) < m) {
+        self.isInGyro = false;
+        return;
+    }
+    self.isInGyro = true;
+    
+    AIPoint direction = AIPointMake(10 *(motion.gravity.y - lastMotion.gravity.y), 10 * (motion.gravity.x - lastMotion.gravity.x), 0);
+    CGFloat angle = 0.032;
     
     for (NSInteger i = 0; i < self.items.count; i ++) {
-//        [self updateFrameOfPoint:i direction:normalDirection andAngle:angle];
+        [self updateFrameOfPoint:i direction:direction andAngle:angle];
     }
+    normalDirection = direction;
+    lastMotion = motion;
 }
 
 #pragma mark -
@@ -571,6 +588,54 @@ const CGFloat AIAnmationDuration = 0.3;
     }
 }
 
+- (void)setIsInGyro:(BOOL)isInGyro
+{
+    _isInGyro = isInGyro;
+    if (isInGyro) {
+        [self timerStop];
+    }
+    else {
+        [self timerStart];
+    }
+}
+
+- (void)setEnableAutoRotate:(BOOL)enableAutoRotate
+{
+    _enableAutoRotate = enableAutoRotate;
+    if (enableAutoRotate) {
+        if (!timer) {
+            timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(autoTurnRotation)];
+            [timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        }
+    }
+    else {
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
+- (void)setEnableRotateWithGyro:(BOOL)enableRotateWithGyro
+{
+    _enableRotateWithGyro = enableRotateWithGyro;
+    if (enableRotateWithGyro) {
+        if (!_motionManager) {
+            _motionManager = [[CMMotionManager alloc] init];
+            _motionManager.deviceMotionUpdateInterval = 1.0/60.0;
+            if (_motionManager.isDeviceMotionAvailable) {
+                __weak typeof(self) weakSelf = self;
+                [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue]withHandler:^(CMDeviceMotion *motion, NSError *error) {
+                    __weak typeof(weakSelf) self = weakSelf;
+                    [self handleCoreMotion:motion];
+                }];
+            }
+        }
+    }
+    else {
+        [_motionManager stopDeviceMotionUpdates];
+        _motionManager = nil;
+    }
+}
+
 - (void)setCenterView:(UIView *)centerView
 {
     _centerView = centerView;
@@ -583,4 +648,3 @@ const CGFloat AIAnmationDuration = 0.3;
 }
 
 @end
-

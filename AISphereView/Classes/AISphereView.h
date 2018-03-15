@@ -30,7 +30,7 @@
 
 @property (nonatomic, assign) CGFloat scaleFactor; // Default is 1.0
 
-@property (nonatomic, assign) BOOL enableGyro;
+@property (nonatomic, assign) BOOL enableRotateWithGyro;
 @property (nonatomic, assign) BOOL enableAutoRotate;
 
 @property (nonatomic, assign, readonly) NSUInteger stackDepth;

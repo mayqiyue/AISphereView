@@ -14,10 +14,15 @@
 @property (nonatomic, strong) AISphereView *sphereView;
 @property (nonatomic, strong) UIButton *button;
 @property (nonatomic, strong) NSMutableArray *stack;
+
+@property (weak, nonatomic) IBOutlet UIButton *enableAutorateBtn;
+@property (weak, nonatomic) IBOutlet UIButton *enableGyro;
+@property (weak, nonatomic) IBOutlet UILabel *autorotateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gyrolabel;
+
 @end
 
 @implementation AIViewController
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,6 +41,16 @@
     [self.button.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = true;
     [self.button.heightAnchor constraintEqualToConstant:44].active = true;
     [self.button.widthAnchor constraintEqualToConstant:100].active = true;
+    
+    [self.enableGyro setTitle:@"EnableGyro" forState:UIControlStateNormal];
+    self.enableGyro.backgroundColor = [UIColor redColor];
+    [self.enableGyro setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.enableAutorateBtn setTitle:@"EnableAutoRotate" forState:UIControlStateNormal];
+    self.enableAutorateBtn.backgroundColor = [UIColor blueColor];
+    [self.enableAutorateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    self.gyrolabel.text = @(self.sphereView.enableRotateWithGyro).stringValue;
+    self.autorotateLabel.text = @(self.sphereView.enableAutoRotate).stringValue;
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,6 +65,8 @@
         _sphereView.delegate = self;
         _sphereView.lineColor = [UIColor greenColor];
         _sphereView.scaleFactor = 0.6;
+        _sphereView.enableRotateWithGyro = true;
+        _sphereView.enableAutoRotate = true;
     }
     return _sphereView;
 }
@@ -90,6 +107,16 @@
 //    self.button.userInteractionEnabled = sphereView.stackDepth > 0;
     [self.button setTitle:sphereView.stackDepth > 0 ? @"isInTop" : @"Back" forState:UIControlStateNormal];
 }
+
+- (IBAction)autoRotateAction:(id)sender {
+    self.sphereView.enableAutoRotate = !self.sphereView.enableAutoRotate;
+    self.autorotateLabel.text = @(self.sphereView.enableAutoRotate).stringValue;
+}
+- (IBAction)gyroAction:(id)sender {
+    self.sphereView.enableRotateWithGyro = !self.sphereView.enableRotateWithGyro;
+    self.gyrolabel.text = @(self.sphereView.enableRotateWithGyro).stringValue;
+}
+
 
 #pragma mark -
 
