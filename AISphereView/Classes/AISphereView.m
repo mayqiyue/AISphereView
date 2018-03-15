@@ -549,7 +549,7 @@ const CGFloat AIAnmationDuration = 0.3;
         lastMotion = motion;
     }
     
-    if (self.isMoving || panGesture.state == UIGestureRecognizerStateChanged) {
+    if (self.isMoving || panGesture.state == UIGestureRecognizerStateChanged || !inertia.paused) {
         self.isInGyro = false;
         return;
     }
