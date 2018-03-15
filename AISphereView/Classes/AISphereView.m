@@ -8,6 +8,8 @@
 #import "AISphereView.h"
 #import "AIMatrix.h"
 
+@import CoreMotion;
+
 const CGFloat AIAnmationDuration = 0.3;
 
 @interface AICoodinateStackItem : NSObject
@@ -20,12 +22,14 @@ const CGFloat AIAnmationDuration = 0.3;
 
 @property (nonatomic, assign) AIPoint ca; // point after animation of prior center view.
 
-
 @end
 
 @implementation AICoodinateStackItem
+
 @end
 
+#pragma mark - AISphereView
+/*************************************** AISphereView *******************************************************/
 @interface AISphereView ()
 {
     AIPoint normalDirection;
@@ -50,6 +54,9 @@ const CGFloat AIAnmationDuration = 0.3;
 @property (nonatomic, strong) NSMutableArray *coordinateStack;
 
 @property (nonatomic, assign) BOOL isMoving;
+
+@property (nonatomic, strong) CMMotionManager *motionManager;
+
 
 @end
 
@@ -99,8 +106,16 @@ const CGFloat AIAnmationDuration = 0.3;
     
     timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(autoTurnRotation)];
     [timer addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-
+    
     _coordinateStack = [NSMutableArray new];
+    
+    _motionManager = [[CMMotionManager alloc] init];
+    _motionManager.deviceMotionUpdateInterval = 1;
+    if (_motionManager.isDeviceMotionAvailable) {
+        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue]withHandler:^(CMDeviceMotion *motion, NSError *error) {
+            [self handleCoreMotion:motion];
+        }];
+    }
 }
 
 - (void)dealloc
@@ -476,7 +491,7 @@ const CGFloat AIAnmationDuration = 0.3;
         [self inertiaStop];
     }
     else {
-        velocity -= 70.;
+        velocity -= 150.;
         CGFloat angle = velocity / self.frame.size.width * 2. * inertia.duration;
         for (NSInteger i = 0; i < self.items.count; i ++) {
             [self updateFrameOfPoint:i direction:normalDirection andAngle:angle];
@@ -505,13 +520,12 @@ const CGFloat AIAnmationDuration = 0.3;
         last = [gesture locationInView:self];
         [self timerStop];
         [self inertiaStop];
-        
     }
     else if (gesture.state == UIGestureRecognizerStateChanged) {
         CGPoint current = [gesture locationInView:self];
         AIPoint direction = AIPointMake(last.y - current.y, current.x - last.x, 0);
         
-        CGFloat distance = sqrt(direction.x * direction.x + direction.y * direction.y);
+        CGFloat distance = sqrt(direction.x * direction.x + direction.y * direction.y) * 2;
         
         CGFloat angle = distance / (self.frame.size.width / 2.);
         
@@ -527,6 +541,22 @@ const CGFloat AIAnmationDuration = 0.3;
         [self inertiaStart];
     }
 }
+
+- (void)handleCoreMotion:(CMDeviceMotion *)motion
+{
+    NSLog(@"===================================================================================================");
+    NSLog(@"gravity is (%.04f, %.04f, %.04f)", motion.gravity.x, motion.gravity.y, motion.gravity.z);
+    NSLog(@"attitude (%.04f, %.04f, %.04f)", motion.attitude.roll, motion.attitude.pitch, motion.attitude.yaw);
+    NSLog(@"rotationRate (%.04f, %.04f, %.04f)", motion.rotationRate.x, motion.rotationRate.y, motion.rotationRate.z);
+    NSLog(@"userAcceleration (%.04f, %.04f, %.04f)", motion.userAcceleration.x, motion.userAcceleration.y, motion.userAcceleration.z);
+    NSLog(@"\n");
+    
+    for (NSInteger i = 0; i < self.items.count; i ++) {
+//        [self updateFrameOfPoint:i direction:normalDirection andAngle:angle];
+    }
+}
+
+#pragma mark -
 
 - (void)setIsMoving:(BOOL)isMoving
 {
