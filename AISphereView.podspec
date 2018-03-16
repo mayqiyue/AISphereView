@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AISphereView'
-  s.version          = '1.1.1'
+  s.version          = '1.2.0'
   s.summary          = 'AISphereView is great.'
 
 # This description is used to generate tags and improve search results.
