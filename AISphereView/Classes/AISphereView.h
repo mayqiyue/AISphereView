@@ -42,7 +42,7 @@
 - (void)popToCenter:(UIView *)centerView withItems:(NSArray <UIView *>*)items;
 
 - (void)timerStart;
-
+- (void)timerPause;
 - (void)timerStop;
 
 

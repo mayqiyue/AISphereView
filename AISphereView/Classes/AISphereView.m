@@ -456,9 +456,17 @@ const CGFloat AIAnmationDuration = 0.3;
     timer.paused = NO;
 }
 
-- (void)timerStop
+- (void)timerPause
 {
     timer.paused = YES;
+}
+
+- (void)timerStop
+{
+    [timer invalidate];
+    timer = nil;
+    [inertia invalidate];
+    inertia = nil;
 }
 
 - (void)autoTurnRotation
@@ -475,7 +483,7 @@ const CGFloat AIAnmationDuration = 0.3;
 
 - (void)inertiaStart
 {
-    [self timerStop];
+    [self timerPause];
     inertia.paused = NO;
 }
 
@@ -518,7 +526,7 @@ const CGFloat AIAnmationDuration = 0.3;
 {
     if (gesture.state == UIGestureRecognizerStateBegan) {
         lastPoint = [gesture locationInView:self];
-        [self timerStop];
+        [self timerPause];
         [self inertiaStop];
     }
     else if (gesture.state == UIGestureRecognizerStateChanged) {
@@ -581,7 +589,7 @@ const CGFloat AIAnmationDuration = 0.3;
     panGesture.enabled = !isMoving;
     self.userInteractionEnabled = !isMoving;
     if (isMoving) {
-        [self timerStop];
+        [self timerPause];
     }
     else {
         [self timerStart];
@@ -592,7 +600,7 @@ const CGFloat AIAnmationDuration = 0.3;
 {
     _isInGyro = isInGyro;
     if (isInGyro) {
-        [self timerStop];
+        [self timerPause];
     }
     else {
         [self timerStart];
